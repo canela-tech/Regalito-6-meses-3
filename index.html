@@ -1,0 +1,512 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi amor 💜</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  background: #050511;
+  color: white;
+  font-family: Georgia, serif;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.content {
+  position: fixed;
+  z-index: 2;
+  bottom: 28px;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  padding: 15px;
+}
+
+h1 {
+  font-size: clamp(23px, 5vw, 36px);
+  color: #d9c9ff;
+  text-shadow: 0 0 15px #9274ff, 0 0 30px #4935a8;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #b9b7e9;
+  letter-spacing: 3px;
+  font-size: 12px;
+  margin-bottom: 17px;
+}
+
+button {
+  pointer-events: auto;
+  cursor: pointer;
+  border: 1px solid #aa94ff;
+  border-radius: 30px;
+  padding: 12px 25px;
+  color: white;
+  font-size: 15px;
+  background: linear-gradient(135deg, #44318b, #7653b9);
+  box-shadow: 0 0 20px #7357d477;
+  transition: .3s;
+}
+
+button:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 30px #a58aff;
+}
+
+.spotify {
+  position: fixed;
+  z-index: 3;
+  top: 15px;
+  right: 15px;
+  width: min(300px, calc(100% - 30px));
+  opacity: .9;
+}
+
+#secret {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #03030be8;
+  backdrop-filter: blur(10px);
+}
+
+.letter {
+  width: min(440px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 30px 25px;
+  border: 1px solid #9d83ed;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #211b48, #100f29);
+  box-shadow: 0 0 35px #8062d766;
+  text-align: center;
+  animation: appear .4s ease;
+}
+
+.letter h2 {
+  color: #d9caff;
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+.letter p {
+  color: #eeeaff;
+  line-height: 1.8;
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media(max-width: 600px) {
+  .spotify {
+    width: 220px;
+  }
+
+  .content {
+    bottom: 18px;
+  }
+}
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+
+<body>
+
+<div id="scene"></div>
+
+<!-- SPOTIFY -->
+<div class="spotify">
+  <iframe
+    style="border-radius:12px"
+    src="https://open.spotify.com/embed/track/72IUN0ltSZCKbUMp1rpJXL?utm_source=generator"
+    width="100%"
+    height="152"
+    frameborder="0"
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+    loading="lazy">
+  </iframe>
+</div>
+
+<!-- TEXTO PRINCIPAL -->
+<div class="content">
+  <h1>Un universo para nosotros 💜</h1>
+  <p class="subtitle">TÚ, YO Y UN INFINITO DE MOMENTOS</p>
+  <button onclick="openSecret()">Abrir mi mensaje 💌</button>
+</div>
+
+<!-- CARTA SECRETA -->
+<div id="secret" onclick="closeOutside(event)">
+  <div class="letter">
+    <h2>Para mi amor 💙</h2>
+
+    <p>Gracias mi amor por estos 6 meses que hemos pasado juntos, hemos pasado mucho juntos y agradezco cada unos de esos momentos, espero podamos seguir compartiendo muchos mas, ojala nunca te canses de mi y si te cansas duermes un rato para recuperar fuerzas por que yo no me voy a alejar de ti amorcito. Te amo con toda mi alma, porque el alma nunca muere amorcito y con el corazón se queda corto</p>
+
+    <button onclick="closeSecret()">Cerrar cartita 💌</button>
+  </div>
+</div>
+
+<script type="module">
+import * as THREE from "three";
+import { FontLoader } from "three/addons/loaders/FontLoader.js";
+import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+
+// ESCENA
+const container = document.getElementById("scene");
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+  45,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  100
+);
+
+camera.position.set(0, 0, 7.5);
+
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  alpha: true
+});
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+container.appendChild(renderer.domElement);
+
+// ILUMINACIÓN
+scene.add(new THREE.AmbientLight(0xffffff, 1.4));
+
+const blueLight = new THREE.PointLight(0x559cff, 35);
+blueLight.position.set(-3, 3, 5);
+scene.add(blueLight);
+
+const violetLight = new THREE.PointLight(0x9b55ff, 35);
+violetLight.position.set(3, -2, 4);
+scene.add(violetLight);
+
+const frontLight = new THREE.PointLight(0xc4d5ff, 15);
+frontLight.position.set(0, 0, 5);
+scene.add(frontLight);
+
+// GRUPO DEL CORAZÓN
+const heart = new THREE.Group();
+scene.add(heart);
+
+// CORAZÓN MATEMÁTICO
+function insideHeart(x, y) {
+  const a = x*x + y*y - 1;
+  return a*a*a - x*x*y*y*y <= 0;
+}
+
+// PALABRAS
+const phrases = [
+  "TE AMO",
+  "MI VIDA",
+  "MI CIELO",
+  "CONTIGO",
+  "ERES ESPECIAL",
+  "MI FELICIDAD",
+  "TE QUIERO",
+  "MI UNIVERSO",
+  "PARA SIEMPRE",
+  "AMOR BONITO",
+  "ERES MI TODO",
+  "MI LUGAR SEGURO",
+  "TÚ Y YO",
+  "INFINITO",
+  "MI PERSONA FAVORITA",
+  "MI CORAZÓN",
+  "MI ESTRELLA"
+];
+
+const colors = [
+  0x80bdff,
+  0x9c8aff,
+  0x66c9ff,
+  0xc3a0ff,
+  0x729bff,
+  0xd1c2ff
+];
+
+
+// CREACIÓN DE PALABRAS MÁS PEQUEÑAS
+function createWord(font, phrase, x, y, width, colorIndex) {
+  const geometry = new TextGeometry(phrase, {
+    font: font,
+    size: 0.047,
+    depth: 0.045,
+    curveSegments: 6,
+    bevelEnabled: true,
+    bevelThickness: 0.004,
+    bevelSize: 0.002,
+    bevelSegments: 2
+  });
+
+  geometry.computeBoundingBox();
+
+  const originalWidth =
+    geometry.boundingBox.max.x -
+    geometry.boundingBox.min.x;
+
+  const scale = Math.min(1, width / originalWidth);
+
+  geometry.scale(scale, scale, scale);
+  geometry.computeBoundingBox();
+
+  geometry.translate(
+    -(geometry.boundingBox.min.x +
+      geometry.boundingBox.max.x) / 2,
+    0,
+    0
+  );
+
+  const color = colors[colorIndex % colors.length];
+
+  const material = new THREE.MeshStandardMaterial({
+    color: color,
+    metalness: 0.65,
+    roughness: 0.2,
+    emissive: color,
+    emissiveIntensity: 0.35
+  });
+
+  const word = new THREE.Mesh(geometry, material);
+  word.position.set(x, y, 0);
+
+  heart.add(word);
+}
+
+// RELLENO DEL CORAZÓN
+const loader = new FontLoader();
+
+loader.load(
+  "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json",
+
+  function(font) {
+
+    const phrases = [
+      "TE AMO", "MI VIDA", "CONTIGO",
+      "MI CIELO", "MI AMOR", "TE QUIERO",
+      "MI UNIVERSO", "ERES MI TODO",
+      "MI FELICIDAD", "PARA SIEMPRE",
+      "AMOR BONITO", "MI ESTRELLA",
+      "TÚ Y YO", "MI PERSONA FAVORITA",
+      "INFINITO", "MI CORAZÓN",
+      "MI LUGAR SEGURO", "ERES ESPECIAL"
+    ];
+
+    let wordIndex = 0;
+
+    // Silueta de corazón con muchas filas pequeñas
+    for (let y = 1.15; y >= -1.15; y -= 0.065) {
+
+      let insidePositions = [];
+
+      for (let x = -1.35; x <= 1.35; x += 0.012) {
+
+        const nx = x / 1.35;
+        const ny = y / 1.15;
+
+        const equation =
+          Math.pow(nx * nx + ny * ny - 1, 3) -
+          nx * nx * ny * ny * ny;
+
+        if (equation <= 0) {
+          insidePositions.push(x);
+        }
+      }
+
+      if (insidePositions.length < 5) continue;
+
+      // Separar la figura en tramos horizontales
+      const left = insidePositions[0];
+      const right = insidePositions[insidePositions.length - 1];
+      const width = right - left;
+
+      // Rellenar cada fila con varias palabras
+      const wordCount = Math.max(1, Math.floor(width / 0.22));
+      const spacing = width / wordCount;
+
+      for (let i = 0; i < wordCount; i++) {
+
+        const x = left + spacing * (i + 0.5);
+        const phrase = phrases[wordIndex % phrases.length];
+
+        createWord(
+          font,
+          phrase,
+          x,
+          y,
+          spacing * 0.95,
+          wordIndex
+        );
+
+        wordIndex++;
+      }
+    }
+
+    // D CENTRAL
+    const dGeometry = new TextGeometry("D", {
+      font: font,
+      size: 0.34,
+      depth: 0.13,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 0.018,
+      bevelSize: 0.012,
+      bevelSegments: 3
+    });
+
+    dGeometry.computeBoundingBox();
+
+    dGeometry.translate(
+      -(dGeometry.boundingBox.min.x +
+        dGeometry.boundingBox.max.x) / 2,
+      -(dGeometry.boundingBox.min.y +
+        dGeometry.boundingBox.max.y) / 2,
+      0
+    );
+
+    const dMaterial = new THREE.MeshStandardMaterial({
+      color: 0xd8c8ff,
+      metalness: 0.8,
+      roughness: 0.15,
+      emissive: 0x805cff,
+      emissiveIntensity: 0.8
+    });
+
+    const letterD = new THREE.Mesh(dGeometry, dMaterial);
+    letterD.position.set(0, 0, 0.25);
+
+    heart.add(letterD);
+
+    // Corazón más pequeño para que se vea completo
+    heart.scale.setScalar(0.95);
+  },
+
+  undefined,
+
+  function(error) {
+    console.error("Error cargando la fuente:", error);
+  }
+);
+
+// ESTRELLAS
+const starGeometry = new THREE.BufferGeometry();
+const starPositions = [];
+
+for (let i = 0; i < 1300; i++) {
+  starPositions.push(
+    (Math.random() - 0.5) * 18,
+    (Math.random() - 0.5) * 12,
+    (Math.random() - 0.5) * 8 - 2
+  );
+}
+
+starGeometry.setAttribute(
+  "position",
+  new THREE.Float32BufferAttribute(starPositions, 3)
+);
+
+const stars = new THREE.Points(
+  starGeometry,
+  new THREE.PointsMaterial({
+    color: 0xb9a9ff,
+    size: 0.025,
+    transparent: true,
+    opacity: 0.85
+  })
+);
+
+scene.add(stars);
+
+// ANIMACIÓN
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const time = clock.getElapsedTime();
+
+  const pulse = 1 + Math.sin(time * 2) * 0.025;
+
+ heart.scale.setScalar(
+  0.95 * (1 + Math.sin(time * 2) * 0.018)
+);
+
+  heart.rotation.y = Math.sin(time * 0.45) * 0.20;
+  heart.rotation.x = Math.sin(time * 0.35) * 0.045;
+  heart.position.y = Math.sin(time * 0.8) * 0.06;
+
+  stars.rotation.z = time * 0.008;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// AJUSTE DE PANTALLA
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// CARTA
+window.openSecret = function() {
+  document.getElementById("secret").style.display = "flex";
+};
+
+window.closeSecret = function() {
+  document.getElementById("secret").style.display = "none";
+};
+
+window.closeOutside = function(event) {
+  if (event.target.id === "secret") {
+    closeSecret();
+  }
+};
+</script>
+
+</body>
+</html>
