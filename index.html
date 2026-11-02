@@ -4,135 +4,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para mi amor 💜</title>
+<title>Para ti 💜</title>
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   overflow: hidden;
-  background: #050511;
+  background: radial-gradient(ellipse at center, #17113c 0%, #08091e 65%, #03040e 100%);
+  font-family: Arial, sans-serif;
   color: white;
-  font-family: Georgia, serif;
 }
 
 #scene {
   position: fixed;
   inset: 0;
-  z-index: 1;
-}
-
-.content {
-  position: fixed;
-  z-index: 2;
-  bottom: 28px;
-  width: 100%;
-  text-align: center;
-  pointer-events: none;
-  padding: 15px;
-}
-
-h1 {
-  font-size: clamp(23px, 5vw, 36px);
-  color: #d9c9ff;
-  text-shadow: 0 0 15px #9274ff, 0 0 30px #4935a8;
-  margin-bottom: 10px;
-}
-
-.subtitle {
-  color: #b9b7e9;
-  letter-spacing: 3px;
-  font-size: 12px;
-  margin-bottom: 17px;
-}
-
-button {
-  pointer-events: auto;
-  cursor: pointer;
-  border: 1px solid #aa94ff;
-  border-radius: 30px;
-  padding: 12px 25px;
-  color: white;
-  font-size: 15px;
-  background: linear-gradient(135deg, #44318b, #7653b9);
-  box-shadow: 0 0 20px #7357d477;
-  transition: .3s;
-}
-
-button:hover {
-  transform: scale(1.06);
-  box-shadow: 0 0 30px #a58aff;
 }
 
 .spotify {
   position: fixed;
-  z-index: 3;
-  top: 15px;
-  right: 15px;
-  width: min(300px, calc(100% - 30px));
-  opacity: .9;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  z-index: 5;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 25px #8b5cf655;
 }
 
-#secret {
+.spotify iframe {
+  width: 100%;
+  height: 80px;
+  border: 0;
+}
+
+.secret-button {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 13px 25px;
+  border: 1px solid #a78bfa;
+  border-radius: 30px;
+  color: white;
+  background: linear-gradient(110deg, #3346a8, #8146b8);
+  box-shadow: 0 0 20px #8b5cf677;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.secret-button:hover {
+  box-shadow: 0 0 30px #a78bfa;
+}
+
+.modal {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 5;
-  align-items: center;
+  z-index: 10;
+  background: #050516d9;
   justify-content: center;
+  align-items: center;
   padding: 20px;
-  background: #03030be8;
-  backdrop-filter: blur(10px);
 }
 
-.letter {
-  width: min(440px, 100%);
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 30px 25px;
-  border: 1px solid #9d83ed;
+.modal-content {
+  max-width: 470px;
+  width: 100%;
+  padding: 30px;
   border-radius: 22px;
-  background: linear-gradient(145deg, #211b48, #100f29);
-  box-shadow: 0 0 35px #8062d766;
   text-align: center;
-  animation: appear .4s ease;
-}
-
-.letter h2 {
-  color: #d9caff;
-  margin-bottom: 20px;
-  font-size: 26px;
-}
-
-.letter p {
-  color: #eeeaff;
   line-height: 1.8;
-  font-size: 15px;
-  margin-bottom: 24px;
+  color: #f3eaff;
+  background: linear-gradient(145deg, #211a50, #11132f);
+  border: 1px solid #9875ee;
+  box-shadow: 0 0 40px #805ad555;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-    transform: scale(.85);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.close {
+  margin-top: 20px;
+  padding: 9px 22px;
+  color: white;
+  background: #6545a8;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 @media(max-width: 600px) {
   .spotify {
-    width: 220px;
-  }
-
-  .content {
-    bottom: 18px;
+    width: 230px;
+    top: 12px;
+    right: 12px;
   }
 }
 </style>
@@ -151,44 +118,42 @@ button:hover {
 
 <div id="scene"></div>
 
-<!-- SPOTIFY -->
 <div class="spotify">
   <iframe
-    style="border-radius:12px"
     src="https://open.spotify.com/embed/track/72IUN0ltSZCKbUMp1rpJXL?utm_source=generator"
-    width="100%"
-    height="152"
-    frameborder="0"
     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
     loading="lazy">
   </iframe>
 </div>
 
-<!-- TEXTO PRINCIPAL -->
-<div class="content">
-  <h1>Un universo para nosotros 💜</h1>
-  <p class="subtitle">TÚ, YO Y UN INFINITO DE MOMENTOS</p>
-  <button onclick="openSecret()">Abrir mi mensaje 💌</button>
-</div>
+<button class="secret-button" onclick="openMessage()">
+  💌 Abrir mensaje secreto
+</button>
 
-<!-- CARTA SECRETA -->
-<div id="secret" onclick="closeOutside(event)">
-  <div class="letter">
-    <h2>Para mi amor 💙</h2>
+<div class="modal" id="messageModal">
+  <div class="modal-content">
+    <h2>Para ti 💜</h2>
 
     <p>Gracias mi amor por estos 6 meses que hemos pasado juntos, hemos pasado mucho juntos y agradezco cada unos de esos momentos, espero podamos seguir compartiendo muchos mas, ojala nunca te canses de mi y si te cansas duermes un rato para recuperar fuerzas por que yo no me voy a alejar de ti amorcito. Te amo con toda mi alma, porque el alma nunca muere amorcito y con el corazón se queda corto</p>
 
-    <button onclick="closeSecret()">Cerrar cartita 💌</button>
+    <button class="close" onclick="closeMessage()">Cerrar 💜</button>
   </div>
 </div>
+
+<script>
+function openMessage() {
+  document.getElementById("messageModal").style.display = "flex";
+}
+
+function closeMessage() {
+  document.getElementById("messageModal").style.display = "none";
+}
+</script>
 
 <script type="module">
 import * as THREE from "three";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
-
-// ESCENA
-const container = document.getElementById("scene");
 
 const scene = new THREE.Scene();
 
@@ -199,7 +164,7 @@ const camera = new THREE.PerspectiveCamera(
   100
 );
 
-camera.position.set(0, 0, 7.5);
+camera.position.set(0, 0, 6.5);
 
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
@@ -210,235 +175,259 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-container.appendChild(renderer.domElement);
+document.getElementById("scene").appendChild(renderer.domElement);
 
-// ILUMINACIÓN
-scene.add(new THREE.AmbientLight(0xffffff, 1.4));
+// Luces
+scene.add(new THREE.AmbientLight(0xffffff, 1.5));
 
-const blueLight = new THREE.PointLight(0x559cff, 35);
-blueLight.position.set(-3, 3, 5);
+const blueLight = new THREE.PointLight(0x526dff, 30);
+blueLight.position.set(-3, 3, 4);
 scene.add(blueLight);
 
-const violetLight = new THREE.PointLight(0x9b55ff, 35);
-violetLight.position.set(3, -2, 4);
-scene.add(violetLight);
+const purpleLight = new THREE.PointLight(0xa45cff, 25);
+purpleLight.position.set(3, -2, 3);
+scene.add(purpleLight);
 
-const frontLight = new THREE.PointLight(0xc4d5ff, 15);
-frontLight.position.set(0, 0, 5);
-scene.add(frontLight);
-
-// GRUPO DEL CORAZÓN
+// Grupo del corazón
 const heart = new THREE.Group();
 scene.add(heart);
 
-// CORAZÓN MATEMÁTICO
-function insideHeart(x, y) {
-  const a = x*x + y*y - 1;
-  return a*a*a - x*x*y*y*y <= 0;
+// Silueta matemática del corazón
+function createHeartPoints() {
+  const points = [];
+
+  for (let i = 0; i <= 400; i++) {
+    const t = (i / 400) * Math.PI * 2;
+
+    const x = 16 * Math.pow(Math.sin(t), 3);
+    const y =
+      13 * Math.cos(t)
+      - 5 * Math.cos(2 * t)
+      - 2 * Math.cos(3 * t)
+      - Math.cos(4 * t);
+
+    points.push(
+      new THREE.Vector2(
+        x * 0.085,
+        (y + 6) * 0.11
+      )
+    );
+  }
+
+  return points;
 }
 
-// PALABRAS
-const phrases = [
-  "TE AMO",
-  "MI VIDA",
-  "MI CIELO",
-  "CONTIGO",
-  "ERES ESPECIAL",
-  "MI FELICIDAD",
-  "TE QUIERO",
-  "MI UNIVERSO",
-  "PARA SIEMPRE",
-  "AMOR BONITO",
-  "ERES MI TODO",
-  "MI LUGAR SEGURO",
-  "TÚ Y YO",
-  "INFINITO",
-  "MI PERSONA FAVORITA",
-  "MI CORAZÓN",
-  "MI ESTRELLA"
+const outline = createHeartPoints();
+
+function isInsideHeart(x, y) {
+  let inside = false;
+
+  for (let i = 0, j = outline.length - 1;
+       i < outline.length;
+       j = i++) {
+
+    const xi = outline[i].x;
+    const yi = outline[i].y;
+    const xj = outline[j].x;
+    const yj = outline[j].y;
+
+    const intersect =
+      ((yi > y) !== (yj > y)) &&
+      (x < (xj - xi) * (y - yi) / (yj - yi + 0.000001) + xi);
+
+    if (intersect) inside = !inside;
+  }
+
+  return inside;
+}
+
+// Palabras pequeñas: ninguna se estira
+const words = [
+ "Amor", "Mi vida", "Mi cielo", "Mi corazón", "Mi niño", "Precioso", "Hermoso", "Guapo", "Bonito", "Bello", "Tesoro", "Mi sol", "Mi luna", "Mi estrella", "Mi universo", "Mi mundo", "Mi felicidad", "Mi alegría", "Mi paz", "Mi tranquilidad", "Mi refugio", "Mi hogar", "Mi lugar seguro", "Mi persona favorita", "Mi casualidad favorita", "Mi destino", "Mi sueño", "Mi ilusión", "Mi inspiración", "Mi motivación", "Mi razón de sonreír", "Mi debilidad", "Mi fortaleza", "Mi compañero", "Mi confidente", "Mi cómplice", "Mi mejor amigo", "Mi príncipe", "Mi rey", "Mi angelito", "Mi bebito", "Mi chiquito", "Mi grandote", "Mi consentido", "Mi favorito", "Mi adoración", "Mi encanto", "Mi ternura", "Mi dulzura", "Mi bendición", "Maravilloso", "Increíble", "Extraordinario", "Espectacular", "Fascinante", "Admirable", "Inigualable", "Irremplazable", "Inolvidable", "Especial", "Único", "Auténtico", "Valioso", "Importante", "Deseado", "Adorado", "Amado", "Querido", "Encantador", "Carismático", "Divertido", "Ocurrente", "Inteligente", "Talentoso", "Noble", "Dulce", "Tierno", "Cariñoso", "Atento", "Comprensivo", "Paciente", "Detallista", "Bondadoso", "Maravilla", "Perfección", "Belleza", "Delicia", "Bombón", "Chocolatito", "Cielito", "Solecito", "Corazoncito", "Osito", "Gatito", "Conejito", "Bebé", "Amorcito", "Adoración", "Cariño", "Amor infinito", "Pasión", "Devoción", "Esperanza", "Admiración", "Confianza", "Complicidad", "Lealtad", "Sinceridad", "Honestidad", "Respeto", "Calidez", "Serenidad", "Eternidad", "Mariposas", "Emoción", "Magia", "Armonía", "Compañía", "Comprensión", "Apoyo", "Protección", "Amistad", "Unión", "Nostalgia", "Añoranza", "Reciprocidad", "Romance", "Fascinación", "Enamoramiento", "Calma", "Seguridad", "Mi astronauta", "Mi pedacito de cielo", "Mi lucerito", "Mi estrella fugaz", "Mi galaxia", "Mi constelación", "Mi dulce caos", "Mi poema favorito", "Mi canción favorita", "Mi lugarcito feliz", "Mi casualidad cósmica", "Mi eterno favorito", "Mi media galaxia", "Mi bonito desastre", "Mi sueño despierto", "Mi niño bonito", "Mi tesorito", "Mi vida entera", "Mi mundo precioso", "Mi rayito de luz", "Mi solecito hermoso", "Mi amor eterno", "Mi alegría diaria", "Mi motivo favorito", "Mi pedacito de felicidad", "Mi príncipe hermoso", "Mi compañero de aventuras", "Mi estrella más brillante", "Mi universo favorito", "Mi corazón precioso", "Mi todo", "Mi siempre", "Mi para siempre", "Mi persona especial", "Mi razón favorita", "Mi regalo de la vida", "Mi pensamiento bonito", "Mi sonrisa favorita", "Mi lugar favorito", "Mi amorcito lindo", "Mi niño precioso", "Mi cielo estrellado", "Mi sueño favorito", "Mi felicidad hecha persona", "Mi destino bonito", "Mi fortuna", "Mi milagrito", "Mi tesoro más grande", "Mi amor de mi vida", "Mi príncipe azul", "Mi bomboncito", "Mi osito precioso", "Mi chiquitito", "Mi corazón de melón", "Mi pedacito de amor", "Mi vida bonita", "Mi sol de cada mañana", "Mi luna de cada noche", "Mi razón de existir", "Mi persona favorita del universo", "Mi amor bonito", "Mi felicidad favorita", "Mi niño de mis ojos", "Mi más bonita casualidad", "Mi dulce amor", "Mi eterno cariño", "Mi mejor coincidencia", "Mi pequeño universo", "Mi mundo de colores", "Mi paz en medio del caos", "Mi refugio favorito", "Mi abrazo favorito", "Mi beso favorito", "Mi compañía perfecta", "Mi más grande ilusión", "Mi sueño cumplido", "Mi amorcito de algodón", "Mi cielo bonito", "Mi corazón de oro", "Mi persona irremplazable", "Mi motivo para sonreír", "Mi alegría más grande", "Mi más bonita historia", "Mi amor sin medida", "Mi persona de ensueño", "Mi niño de oro", "Mi dulce compañía", "Mi infinito favorito", "Mi estrella preciosa", "Mi pedacito de universo", "Mi amor de cuento", "Mi aventura favorita", "Mi destino favorito", "Mi bonito presente", "Mi futuro soñado", "Mi razón de felicidad", "Mi cariño más grande", "Mi vida preciosa", "Mi príncipe encantador", "Mi amor de todos los días", "Mi felicidad infinita", "Mi persona maravillosa", "Mi corazón favorito", "Mi mundo entero", "Mi niño consentido", "Mi amor de colores", "Mi más hermoso pensamiento", "Mi sueño de amor", "Mi cielo de verano", "Mi dulce tentación", "Mi alegría del alma", "Mi compañero favorito", "Mi estrella del norte", "Mi sol brillante", "Mi luna preciosa", "Mi amor incomparable", "Mi ternurita", "Mi dulzura favorita", "Mi persona de confianza", "Mi gran amor", "Mi precioso universo", "Mi felicidad diaria", "Mi pequeño gran amor", "Mi más bonito regalo", "Mi encanto favorito", "Mi amor sincero", "Mi príncipe de sueños", "Mi niño de sonrisa bonita", "Mi razón para creer en el amor", "Mi pedacito de eternidad", "Mi siempre bonito", "Mi amor de ensueño", "Mi persona favorita en el mundo", "Mi tesoro precioso", "Mi vida entera y bonita", "Mi corazón latiendo fuera de mí", "Mi amor infinito y hermoso", "Mi niño amado", "Mi sol y mis estrellas", "Mi lugar en el mundo", "Mi felicidad con nombre y apellido", "Mi más grande bendición", "Mi amor más sincero", "Mi dulce razón de vivir", "Mi pequeño paraíso", "Mi universo de amor", "Mi niño de sonrisa perfecta", "Mi persona más bonita", "Mi amor de cada vida", "Mi eterno enamoramiento", "Mi compañero de vida", "Mi cariño infinito", "Mi corazón de azúcar", "Mi cielo de estrellas", "Mi más grande tesoro", "Mi bonito destino", "Mi amor de siempre", "Mi precioso niño", "Mi dulce príncipe", "Mi luz favorita", "Mi felicidad personificada", "Mi amor verdadero", "Mi persona favorita de todas", "Mi pequeño infinito", "Mi hermoso casualidad", "Mi amor de mil vidas", "Mi niño especial", "Mi corazón de cristal", "Mi más linda razón", "Mi sonrisa del alma", "Mi alegría del corazón", "Mi bonito milagro", "Mi amor de primavera", "Mi pedacito de cielo azul", "Mi solcito de amor", "Mi príncipe de galaxia", "Mi cielo infinito", "Mi estrella favorita", "Mi amor precioso", "Mi felicidad más bonita", "Mi niño de ensueño", "Mi dulce universo", "Mi compañero de sueños", "Mi amor de otro mundo", "Mi más linda aventura", "Mi persona favorita de la eternidad", "Mi corazón hermoso", "Mi tesoro de vida", "Mi dulce destino", "Mi amor de todos mis días", "Mi precioso regalo", "Mi razón de felicidad", "Mi niño maravilloso", "Mi amor de luna y estrellas", "Mi mundo de felicidad", "Mi cielo de colores", "Mi más bonita emoción", "Mi persona de mil colores", "Mi amor de galaxias", "Mi niño de mi corazón", "Mi todo bonito", "Mi amorcito precioso", "Mi vida hermosa", "Mi cielo amado", "Mi corazón de miel", "Mi dulce alegría", "Mi persona soñada", "Mi más bonito sueño", "Mi amor de película", "Mi príncipe de cuento", "Mi compañero de risas", "Mi razón favorita de existir", "Mi felicidad hecha amor", "Mi destino de amor", "Mi bonito infinito", "Mi sol de medianoche", "Mi estrella brillante", "Mi amor de cristal", "Mi pequeño tesoro", "Mi alegría eterna", "Mi persona de oro", "Mi más bonito universo", "Mi amor sin final", "Mi príncipe favorito", "Mi dulce hogar", "Mi niño de mi vida", "Mi amor de mi alma", "Mi corazón de algodón", "Mi precioso cielo", "Mi felicidad de todos los días", "Mi amor de mil estrellas", "Mi sueño hecho realidad", "Mi persona más especial", "Mi eterno cariño", "Mi luz en la oscuridad", "Mi amor de colores", "Mi más hermosa coincidencia", "Mi universo de estrellas", "Mi alegría infinita", "Mi precioso destino", "Mi niño encantador", "Mi amor de mis sueños", "Mi cielo de algodón", "Mi tesoro del alma", "Mi corazón de oro", "Mi pequeño sol", "Mi dulce corazón", "Mi compañero eterno", "Mi amor de siempre y para siempre", "Mi más bonita razón para sonreír", "Mi vida favorita", "Mi príncipe de mis sueños", "Mi niño de mis alegrías", "Mi amor de mis días", "Mi universo entero", "Mi felicidad más grande", "Mi precioso amor", "Mi persona de mi vida", "Mi dulce milagro", "Mi estrella de la suerte", "Mi bonito amanecer", "Mi noche favorita", "Mi paz favorita", "Mi amor más bonito", "Mi niño de azúcar", "Mi corazón de chocolate", "Mi pequeño cielo", "Mi alegría favorita", "Mi sol de mi vida", "Mi amor de mi corazón", "Mi precioso tesoro", "Mi razón de todo", "Mi persona más querida", "Mi cariño más dulce", "Mi felicidad más sincera", "Mi mundo de amor", "Mi niño de mis sueños", "Mi compañero ideal", "Mi amor más puro", "Mi sonrisa eterna", "Mi luz de cada día", "Mi bonito recuerdo", "Mi futuro favorito", "Mi amor de mi universo", "Mi príncipe de estrellas", "Mi cielo de mi vida", "Mi razón más bonita", "Mi dulce persona", "Mi niño precioso de mi corazón", "Mi amor sin límites", "Mi más grande alegría", "Mi pequeño mundo", "Mi lugar de paz", "Mi destino hermoso", "Mi persona de mis sueños", "Mi amor de mis amores", "Mi tesoro del universo", "Mi dulce compañía", "Mi corazón entero", "Mi niño favorito de todos", "Mi luz más bonita", "Mi cielo precioso", "Mi amor de eternidad", "Mi felicidad de mi vida", "Mi sol eterno", "Mi galaxia favorita", "Mi estrella de amor", "Mi más lindo pensamiento", "Mi corazón de miel", "Mi razón de cada sonrisa", "Mi amor de cada instante", "Mi niño de mi universo", "Mi mundo favorito", "Mi más bonito regalo", "Mi precioso compañero", "Mi dulce sueño", "Mi eterno amorcito", "Mi persona de mi corazón", "Mi felicidad del alma", "Mi amor de mil colores", "Mi cielo de mi corazón", "Mi vida de colores", "Mi príncipe de mi vida", "Mi alegría de cada día", "Mi pequeño milagro", "Mi más hermoso destino", "Mi persona favorita de mi galaxia", "Mi amor que nunca termina", "Mi bonito lugar seguro", "Mi sol y mi luna", "Mi corazón de estrellas", "Mi amor de otra vida", "Mi dulce eternidad", "Mi persona favorita de todas mis vidas", "Mi niño de mi alma", "Mi más bonito siempre", "Mi felicidad con ojitos", "Mi amor con sonrisa bonita", "Mi universo con nombre", "Mi cielo con ojos bonitos", "Mi pedacito de infinito", "Mi amor de verdad", "Mi más grande fortuna", "Mi precioso angelito", "Mi compañero de aventuras", "Mi dulce razón", "Mi hermoso presente", "Mi futuro soñado", "Mi corazón feliz", "Mi amor de mi vida entera", "Mi persona favorita para siempre", "Mi niño hermoso", "Mi amor bonito de todos los días", "Mi cielo favorito", "Mi tesoro eterno", "Mi felicidad más dulce", "Mi precioso mundo", "Mi razón de amar", "Mi más grande ilusión", "Mi compañero de sueños", "Mi dulce universo", "Mi amor infinito". 💗"
 ];
 
 const colors = [
-  0x80bdff,
-  0x9c8aff,
-  0x66c9ff,
-  0xc3a0ff,
-  0x729bff,
-  0xd1c2ff
+  0x91aaff,
+  0xb6a0ff,
+  0x7c83ff,
+  0xd0b5ff,
+  0x8dd8ff,
+  0xa58cff
 ];
 
-
-// CREACIÓN DE PALABRAS MÁS PEQUEÑAS
-function createWord(font, phrase, x, y, width, colorIndex) {
-  const geometry = new TextGeometry(phrase, {
-    font: font,
-    size: 0.047,
-    depth: 0.045,
-    curveSegments: 6,
-    bevelEnabled: true,
-    bevelThickness: 0.004,
-    bevelSize: 0.002,
-    bevelSegments: 2
-  });
-
-  geometry.computeBoundingBox();
-
-  const originalWidth =
-    geometry.boundingBox.max.x -
-    geometry.boundingBox.min.x;
-
-  const scale = Math.min(1, width / originalWidth);
-
-  geometry.scale(scale, scale, scale);
-  geometry.computeBoundingBox();
-
-  geometry.translate(
-    -(geometry.boundingBox.min.x +
-      geometry.boundingBox.max.x) / 2,
-    0,
-    0
-  );
-
-  const color = colors[colorIndex % colors.length];
-
-  const material = new THREE.MeshStandardMaterial({
-    color: color,
-    metalness: 0.65,
-    roughness: 0.2,
-    emissive: color,
-    emissiveIntensity: 0.35
-  });
-
-  const word = new THREE.Mesh(geometry, material);
-  word.position.set(x, y, 0);
-
-  heart.add(word);
-}
-
-// RELLENO DEL CORAZÓN
 const loader = new FontLoader();
 
 loader.load(
   "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json",
-
   function(font) {
 
-    const phrases = [
-      "TE AMO", "MI VIDA", "CONTIGO",
-      "MI CIELO", "MI AMOR", "TE QUIERO",
-      "MI UNIVERSO", "ERES MI TODO",
-      "MI FELICIDAD", "PARA SIEMPRE",
-      "AMOR BONITO", "MI ESTRELLA",
-      "TÚ Y YO", "MI PERSONA FAVORITA",
-      "INFINITO", "MI CORAZÓN",
-      "MI LUGAR SEGURO", "ERES ESPECIAL"
-    ];
+    const wordMeshes = [];
 
-    let wordIndex = 0;
+    function makeWord(word, x, y, color) {
+      const geometry = new TextGeometry(word, {
+        font: font,
+        size: 0.105,
+        depth: 0.035,
+        curveSegments: 4,
+        bevelEnabled: true,
+        bevelThickness: 0.009,
+        bevelSize: 0.004,
+        bevelSegments: 2
+      });
 
-    // Silueta de corazón con muchas filas pequeñas
-    for (let y = 1.15; y >= -1.15; y -= 0.065) {
+      geometry.computeBoundingBox();
 
-      let insidePositions = [];
+      const width =
+        geometry.boundingBox.max.x -
+        geometry.boundingBox.min.x;
 
-      for (let x = -1.35; x <= 1.35; x += 0.012) {
+      const material = new THREE.MeshStandardMaterial({
+        color: color,
+        metalness: 0.35,
+        roughness: 0.28,
+        emissive: color,
+        emissiveIntensity: 0.16
+      });
 
-        const nx = x / 1.35;
-        const ny = y / 1.15;
+      const mesh = new THREE.Mesh(geometry, material);
 
-        const equation =
-          Math.pow(nx * nx + ny * ny - 1, 3) -
-          nx * nx * ny * ny * ny;
+      mesh.position.set(x, y, Math.random() * 0.045);
+      heart.add(mesh);
 
-        if (equation <= 0) {
-          insidePositions.push(x);
+      wordMeshes.push(mesh);
+
+      return width;
+    }
+
+    // Recorremos el corazón por filas.
+    // Cada palabra conserva su tamaño natural.
+    let rowIndex = 0;
+
+    for (let y = -1.08; y <= 1.08; y += 0.145) {
+
+      const intervals = [];
+      let start = null;
+
+      for (let x = -1.4; x <= 1.4; x += 0.012) {
+        const inside = isInsideHeart(x, y);
+
+        if (inside && start === null) {
+          start = x;
+        }
+
+        if (!inside && start !== null) {
+          intervals.push([start, x]);
+          start = null;
         }
       }
 
-      if (insidePositions.length < 5) continue;
-
-      // Separar la figura en tramos horizontales
-      const left = insidePositions[0];
-      const right = insidePositions[insidePositions.length - 1];
-      const width = right - left;
-
-      // Rellenar cada fila con varias palabras
-      const wordCount = Math.max(1, Math.floor(width / 0.22));
-      const spacing = width / wordCount;
-
-      for (let i = 0; i < wordCount; i++) {
-
-        const x = left + spacing * (i + 0.5);
-        const phrase = phrases[wordIndex % phrases.length];
-
-        createWord(
-          font,
-          phrase,
-          x,
-          y,
-          spacing * 0.95,
-          wordIndex
-        );
-
-        wordIndex++;
+      if (start !== null) {
+        intervals.push([start, 1.4]);
       }
+
+      for (const [left, right] of intervals) {
+
+        const availableWidth = right - left;
+        const rowWords = [];
+        let usedWidth = 0;
+
+        let attempts = 0;
+
+        while (attempts < 80) {
+          attempts++;
+
+          const word =
+            words[(rowIndex * 7 + attempts * 3) % words.length];
+
+          const geometry = new TextGeometry(word, {
+            font: font,
+            size: 0.105,
+            depth: 0.009,
+            curveSegments: 4,
+            bevelEnabled: true,
+            bevelThickness: 0.002,
+            bevelSize: 0.001,
+            bevelSegments: 2
+          });
+
+          geometry.computeBoundingBox();
+
+          const width =
+            geometry.boundingBox.max.x -
+            geometry.boundingBox.min.x;
+
+          const gap = 0.035;
+
+          if (usedWidth + width + gap > availableWidth) {
+            continue;
+          }
+
+          rowWords.push({ word, width });
+          usedWidth += width + gap;
+
+          if (usedWidth >= availableWidth * 0.82) {
+            break;
+          }
+        }
+
+        // Centrar las palabras dentro de cada zona
+        let currentX =
+          left + Math.max(0, (availableWidth - usedWidth) / 2);
+
+        for (const item of rowWords) {
+          const color =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          makeWord(item.word, currentX, y, color);
+          currentX += item.width + 0.035;
+        }
+      }
+
+      rowIndex++;
     }
 
-    // D CENTRAL
+    // Letra D central
     const dGeometry = new TextGeometry("D", {
       font: font,
-      size: 0.34,
-      depth: 0.13,
+      size: 0.58,
+      depth: 0.25,
       curveSegments: 12,
       bevelEnabled: true,
-      bevelThickness: 0.018,
-      bevelSize: 0.012,
-      bevelSegments: 3
+      bevelThickness: 0.005,
+      bevelSize: 0.003,
+      bevelSegments: 4
     });
 
     dGeometry.computeBoundingBox();
 
-    dGeometry.translate(
-      -(dGeometry.boundingBox.min.x +
-        dGeometry.boundingBox.max.x) / 2,
-      -(dGeometry.boundingBox.min.y +
-        dGeometry.boundingBox.max.y) / 2,
-      0
-    );
+    const dWidth =
+      dGeometry.boundingBox.max.x -
+      dGeometry.boundingBox.min.x;
 
     const dMaterial = new THREE.MeshStandardMaterial({
-      color: 0xd8c8ff,
-      metalness: 0.8,
-      roughness: 0.15,
-      emissive: 0x805cff,
-      emissiveIntensity: 0.8
+      color: 0xc4b5fd,
+      metalness: 0.5,
+      roughness: 0.2,
+      emissive: 0x7045d8,
+      emissiveIntensity: 0.4
     });
 
     const letterD = new THREE.Mesh(dGeometry, dMaterial);
-    letterD.position.set(0, 0, 0.25);
 
+    letterD.position.set(-dWidth / 2, -0.28, 0.32);
     heart.add(letterD);
-
-    // Corazón más pequeño para que se vea completo
-    heart.scale.setScalar(0.95);
-  },
-
-  undefined,
-
-  function(error) {
-    console.error("Error cargando la fuente:", error);
   }
 );
 
-// ESTRELLAS
+// Estrellas de fondo
 const starGeometry = new THREE.BufferGeometry();
 const starPositions = [];
 
-for (let i = 0; i < 1300; i++) {
+for (let i = 0; i < 1000; i++) {
   starPositions.push(
-    (Math.random() - 0.5) * 18,
-    (Math.random() - 0.5) * 12,
-    (Math.random() - 0.5) * 8 - 2
+    (Math.random() - 0.5) * 15,
+    (Math.random() - 0.5) * 10,
+    -Math.random() * 5
   );
 }
 
@@ -447,19 +436,17 @@ starGeometry.setAttribute(
   new THREE.Float32BufferAttribute(starPositions, 3)
 );
 
-const stars = new THREE.Points(
-  starGeometry,
-  new THREE.PointsMaterial({
-    color: 0xb9a9ff,
-    size: 0.025,
-    transparent: true,
-    opacity: 0.85
-  })
-);
+const starMaterial = new THREE.PointsMaterial({
+  color: 0xc6c4ff,
+  size: 0.018,
+  transparent: true,
+  opacity: 0.8
+});
 
+const stars = new THREE.Points(starGeometry, starMaterial);
 scene.add(stars);
 
-// ANIMACIÓN
+// Animación
 const clock = new THREE.Clock();
 
 function animate() {
@@ -467,45 +454,28 @@ function animate() {
 
   const time = clock.getElapsedTime();
 
-  const pulse = 1 + Math.sin(time * 2) * 0.025;
+  heart.rotation.y = Math.sin(time * 0.5) * 0.20;
+  heart.rotation.x = Math.sin(time * 0.4) * 0.045;
 
- heart.scale.setScalar(
-  0.95 * (1 + Math.sin(time * 2) * 0.018)
-);
+  const pulse = 1 + Math.sin(time * 2.2) * 0.018;
+  heart.scale.set(pulse, pulse, pulse);
 
-  heart.rotation.y = Math.sin(time * 0.45) * 0.20;
-  heart.rotation.x = Math.sin(time * 0.35) * 0.045;
-  heart.position.y = Math.sin(time * 0.8) * 0.06;
+  heart.position.y = Math.sin(time * 0.8) * 0.045;
 
-  stars.rotation.z = time * 0.008;
+  stars.rotation.z = time * 0.006;
 
   renderer.render(scene, camera);
 }
 
 animate();
 
-// AJUSTE DE PANTALLA
+// Ajuste de pantalla
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
-
-// CARTA
-window.openSecret = function() {
-  document.getElementById("secret").style.display = "flex";
-};
-
-window.closeSecret = function() {
-  document.getElementById("secret").style.display = "none";
-};
-
-window.closeOutside = function(event) {
-  if (event.target.id === "secret") {
-    closeSecret();
-  }
-};
 </script>
 
 </body>
